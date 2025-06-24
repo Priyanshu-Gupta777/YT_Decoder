@@ -1,0 +1,90 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-store/
+package-lock.json # If you prefer yarn.lock
+yarn.lock # If you prefer package-lock.json
+
+# Build artifacts
+dist/
+build/
+out/
+.next/ # Next.js build output
+.nuxt/ # Nuxt.js build output
+public/build/ # Common build output within public
+server/build/ # Common build output for server-side generated files
+
+# Dependency directories for various languages/frameworks
+venv/ # Python virtual environments
+.venv/ # Python virtual environments
+.parcel-cache/ # Parcel build tool cache
+.svelte-kit/ # SvelteKit build output
+.vite/ # Vite cache
+.astro/ # Astro build output
+
+# Editor-specific files
+.idea/ # IntelliJ IDEA
+.vscode/ # VS Code (often only .vscode/settings.json or .vscode/*.code-workspace are ignored)
+*.iml # IntelliJ IDEA module files
+.DS_Store # macOS specific
+Thumbs.db # Windows specific
+ehthumbs.db # Windows specific
+.localized # macOS specific
+Icon? # macOS custom icon files
+
+# Logs
+logs/
+*.log
+npm-debug.log* # Redundant if npm-debug.log is already ignored
+yarn-debug.log* # Redundant if yarn-debug.log is already ignored
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local # Matches any .env file ending with .local
+!.env.example # Keep example .env files if you have them
+
+# Testing
+/coverage
+/.nyc_output
+
+# Local development and temporary files
+*.tmp
+*.bak
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+/temp/
+/tmp/
+
+# Uploaded files (if your app handles user uploads locally)
+/uploads/
+
+# Database files (if local dev DB files are generated)
+*.sqlite3
+*.db
+*.mdb
+
+# Dependency caches
+.npm/
+.yarn-cache/
+.bun/
+
+# VS Code specific (uncomment if you want to ignore all VS Code settings)
+# .vscode/
+
+# Other common OS generated files
+.Trash/
+.Spotlight-V100/
+.Trashes/
+
+# Git-specific (should not be in .gitignore, but often seen by mistake)
+# .git/ # DO NOT IGNORE .git/ - this IS your repository!
+# .gitattributes
+# .gitignore # DO NOT IGNORE .gitignore
