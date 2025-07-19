@@ -47,7 +47,7 @@ YT_DECODER is an AI-powered YouTube comment analyzer that helps content creators
 #### STEP 1: CLONE THE REPO
 
 ```bash
-git clone https://github.com/Priyanshu-Gupta777/YT-Decoder.git
+git clone https://github.com/Priyanshu-Gupta777/YT_Decoder.git
 cd YT-Decoder
 ```
 
