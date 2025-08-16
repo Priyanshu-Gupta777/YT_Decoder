@@ -10,12 +10,12 @@ YT_DECODER is an AI-powered YouTube comment analyzer that helps content creators
 
 ### FEATURES
 
-- 🧠 AI-generated summary of YouTube comments
-- 😄 Sentiment analysis: Positive / Neutral / Negative
-- 🔍 Key themes and repeated audience concerns
-- 📊 Visual graphs for sentiment and keyword distribution
-- 🔐 Secure login/signup using JWT
-- 📱 Fully responsive dashboard built in React
+- AI-generated summary of YouTube comments
+- Sentiment analysis: Positive / Neutral / Negative
+- Key themes and repeated audience concerns
+- Visual graphs for sentiment and keyword distribution
+- Secure login/signup using JWT
+- Fully responsive dashboard built in React
 
 ---
 
