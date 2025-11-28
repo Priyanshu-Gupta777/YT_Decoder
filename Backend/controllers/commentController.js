@@ -70,7 +70,7 @@ exports.analyzeWithGemini = async (req, res) => {
     const authors = rawComments.map(c => c.authorDisplayName);
 
 
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
     const prompt = `
 You are an expert YouTube content analyst AI. Analyze the following video using metadata and top viewer comments. Your analysis will power a frontend dashboard, so keep output clean and structured for direct display.
