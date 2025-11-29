@@ -1,79 +1,45 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const User = require('../models/user');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const {authenticateToken} = require('../middleware/auth');
 
-//signup
-router.post('/signup', async(req,res) => {
-     
-    try{
-       
-        const {username, email, password} = req.body;
+const { analyzeWithGemini } = require("../controllers/commentController");
 
-        if(username.length < 4){return res.status(400).json({message : "length should be greater than 4"});}
+const {
+  authenticateToken,
+  protectVerifyOtp,
+  protectChangePassword,
+} = require("../middleware/auth.js");
 
-        //check username already exist
-        const existusername = await User.findOne({username : username});
-        if(existusername){return res.status(400).json({message : "username already exist"});}
+const {
+  registerUser,
+  loginUser,
+  verification,
+  logoutUser,
+  forgotPassword,
+  verifyOTP,
+  changePassword,
+} = require("../controllers/userController.js");
+const { isAuthenticated } = require("../middleware/isAuthenticated.js");
 
-        //check for email exist
-        const existemail = await User.findOne({email : email});
-        if(existemail){return res.status(400).json({message : "email already exist"});}
+router.post("/signup", registerUser);
 
-        //check for password length
-        if(password.length<=5){return res.status(400).json({message : "increase length of password"});}
+router.post("/signin", loginUser);
 
-        const hashedPassword = await bcrypt.hash(password, 15);
+router.post("/signout", isAuthenticated, logoutUser);
 
-        const newUser = new User({
-            username: username,
-            email: email,
-            password: hashedPassword
-        })
+router.post("/verify", verification);
 
-        await newUser.save();
-        return res.status(200).json({message:"SignUP Successfully"});
-    }
-    catch(err){
-         res.status(500).json({message : "Internal server error"});
-    }
+router.post("/forget-password", forgotPassword);
+
+router.post("/verifyotp/:email", protectVerifyOtp, verifyOTP);
+
+router.post("/change-password/:email", protectChangePassword, changePassword);
+
+router.post("/analyze", authenticateToken, analyzeWithGemini);
+
+router.get("/test", authenticateToken, (req, res) => {
+  return res
+    .status(500)
+    .json({ message: "Middleware work successfully (>_o)" });
 });
-
-router.post('/signin', async(req,res) => {
-   try{
-    const {email, password} = req.body;
-    const existUser = await User.findOne({email});
-
-    if(!existUser) {return res.status(400).json({message:"Invalid Credentials"})};
-
-    await bcrypt.compare(password, existUser.password, (err, data) => {
-        if(data){
-
-            const authClaims = [{id: existUser._id,},{name:existUser.username},{email:existUser.email}];
-
-            const token = jwt.sign({authClaims}, process.env.SECRET_KEY, {expiresIn : '30d'});
-
-            return res.status(200).json({id:existUser._id, username:existUser.username, email:existUser.email, token:token});
-        }
-        else{
-            return res.status(400).json({message:"Invalid Credentials"});
-        }
-    })
-
-   }
-   catch(err){
-    return res.status(400).json({message:"OOPs! some error please check"});
-   }
-
-});
-
-router.get('/test', authenticateToken,(req, res) => {
-  return res.status(500).json({message: "Middleware work successfully (>_o)"});
-});
-
-
-
 
 module.exports = router;

@@ -20,8 +20,8 @@ app.get('/', (req, res) => {
     res.send("Hello world");
 })
 
-app.use('/api/sign', User);
-app.use('/api', commentRoutes); 
+app.use('/user', User);
+//app.use('/comment', commentRoutes); 
 
 
 const PORT = process.env.PORT || 5000;

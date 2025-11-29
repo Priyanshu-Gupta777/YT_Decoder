@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { LogOut, Play, Search, TrendingUp, MessageCircle, BarChart3, Calendar, Eye, Heart, MessageSquare, Video, User, Target, Lightbulb, HelpCircle, ThumbsUp } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { authActions } from '../store/auth';
 import {LogOut as LogoutIcon} from 'lucide-react'
 import {
@@ -40,14 +42,33 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const dispatch= useDispatch(); 
   
-  const LogOut = (e) => {
+  const LogOut = async(e) => {
     e.preventDefault();
-    dispatch(authActions.logout());
-    
-    localStorage.clear('id');
-    localStorage.clear('token');
-    
-    navigate('/')
+
+    try{
+      const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/signout`, {}, {
+        headers:{
+          Authorization: `Bearer ${token}`
+        }
+      })
+
+      if(res.data.success){
+        dispatch(authActions.setUser(null));
+        localStorage.clear('id');
+        localStorage.clear('token');
+        toast("Log-Out Successfully",{icon:"👌",
+      style: {
+      borderRadius: '10px',
+      background: '#333',
+      color: '#fff',
+      }
+      })
+        navigate('/')
+      }
+
+    }catch(err){
+      console.log(err);
+    }
 }
 
   const handleAnalyze = async () => {
@@ -58,12 +79,13 @@ const Dashboard = () => {
     // Simulate API call
     try {
       const response = await axios.post(
-        'https://yt-backend-mlt6.onrender.com/api/comment/analyze',
+        `${import.meta.env.VITE_BASE_URL}/analyze`,
         { videoUrl: videoUrl },
         { headers: { Authorization: `Bearer ${token}`} }
       );
-      //console.log(response.data);
+      console.log(response.data);
       //let data = response.data;
+      
       
       setAnalysisData(response.data);
     } catch (error) {
@@ -316,7 +338,7 @@ const Dashboard = () => {
                 <div key={index} className="bg-green-900/20 border border-green-700/50 rounded-lg p-4">
                   <div className="flex items-center mb-2">
                     <User className="h-4 w-4 mr-2 text-green-400" />
-                    <span className="font-medium text-green-400">{comment.username}</span>
+                    <span className="font-medium text-green-400">{comment.user}</span>
                   </div>
                   <p className="text-gray-300 text-sm leading-relaxed">{comment.comment}</p>
                 </div>
@@ -335,7 +357,7 @@ const Dashboard = () => {
                 <div key={index} className="bg-red-900/20 border border-red-700/50 rounded-lg p-4">
                   <div className="flex items-center mb-2">
                     <User className="h-4 w-4 mr-2 text-red-400" />
-                    <span className="font-medium text-red-400">{comment.username}</span>
+                    <span className="font-medium text-red-400">{comment.user}</span>
                   </div>
                   <p className="text-gray-300 text-sm leading-relaxed">{comment.comment}</p>
                 </div>

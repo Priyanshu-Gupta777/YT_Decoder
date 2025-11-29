@@ -3,7 +3,7 @@ import { BarChart3, MessageCircle, TrendingUp, Zap, Play, Users, Youtube, Brain,
 import {useNavigate} from 'react-router-dom'
 import { Link } from 'react-router-dom';
 import {useSelector} from 'react-redux';
-import { authActions } from '../../store/auth';
+import { authActions } from '../store/auth';
 
 const LandingPage = () => {
   const features = [
@@ -28,12 +28,14 @@ const LandingPage = () => {
       description: "Get insights and recommendations for better engagement"
     }
   ];
+
+  const year = new Date().getFullYear();
   
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const user = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
 
   const handleClick = () => {
-    if (isLoggedIn) {
+    if (user) {
       navigate('/dashboard');
     } else {
       navigate('/login');
@@ -59,14 +61,14 @@ const LandingPage = () => {
               <span className="text-2xl font-bold text-white">YT_Decoder</span>
             </div>
             <div className="flex space-x-4">
-            {isLoggedIn === false? (<Link to = "/login"><button
+            {user === null? (<Link to = "/login"><button
                 onClick={onLogin}
                 className="px-4 py-2 text-gray-300 hover:text-white transition-colors"
               >
                 Login
               </button></Link>) : <></>}
               
-              {isLoggedIn === false? (<Link to = "/signup"><button
+              {user === null? (<Link to = "/signup"><button
                 onClick={onSignup}
                 className="px-4 py-2 text-gray-300 hover:text-white  transition-colors rounded-lg bg-gradient-to-r from-blue-400 to-purple-600"
               >
@@ -216,7 +218,7 @@ const LandingPage = () => {
               <span className="text-xl font-bold text-white">YT_Decoder</span>
             </div>
             <div className="text-gray-400">
-              © 2025 YT_Decoder. All rights reserved.
+              © {year} YT_Decoder. All rights reserved.
             </div>
           </div>
         </div>
