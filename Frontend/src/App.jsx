@@ -11,7 +11,7 @@ import Login from "./pages/Login.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import Signup from "./pages/Signup.jsx";
 import { authActions } from "./store/auth.js";
-import VerifyEmail from "./pages/verifyEmail.jsx";
+import VerifyEmail from "./pages/VerifyEmail.jsx";
 import Verify from "./pages/Verify.jsx";
 import ForgetPassword from "./pages/ForgetPassword.jsx";
 import VerifyOTP from "./pages/VerifyOTP.jsx";
