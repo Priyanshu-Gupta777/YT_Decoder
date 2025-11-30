@@ -83,7 +83,7 @@ const Dashboard = () => {
         { videoUrl: videoUrl },
         { headers: { Authorization: `Bearer ${token}`} }
       );
-      console.log(response.data);
+      //console.log(response.data);
       //let data = response.data;
       
       
